@@ -1,5 +1,5 @@
 import { render } from "react-dom";
 
-import { HelloWorld } from "./components/HelloWorld";
+import { ColorTool } from "./components/ColorTool";
 
-render(<HelloWorld />, document.querySelector("#root"));
+render(<ColorTool />, document.querySelector("#root"));
