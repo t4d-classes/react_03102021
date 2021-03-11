@@ -1,39 +1,43 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export function ColorTool(props) {
-  // render logic
+  const [colors, setColors] = useState(props.colors.concat());
 
-  const [colorForm, setColorForm] = useState(
-    {
-      name: "",
-      hexcode: "",
-    } /* initial form state */
-  );
+  const [colorForm, setColorForm] = useState({
+    name: '',
+    hexcode: '',
+  });
 
-  const colorListItems = props.colors.map((color) => (
-    <li key={color.id}>
-      {color.name} {color.hexcode}
-    </li>
-  ));
-
-  // are similar to the methods on the class
-  const change = (e) => {
-    // updates color form, and triggers the re-render
+  const change = e => {
     setColorForm({
-      ...colorForm, // copy the properties from the original object
-      // updates the property of the field I am typing into
+      ...colorForm,
       [e.target.name]: e.target.value,
     });
   };
 
-  console.log(colorForm);
+  const addColor = () => {
+    setColors([
+      ...colors,
+      { ...colorForm, id: Math.max(...colors.map(c => c.id), 0) + 1 },
+    ]);
+    setColorForm({
+      name: '',
+      hexcode: '',
+    });
+  };
 
   return (
     <>
       <header>
         <h1>Color Tool</h1>
       </header>
-      <ul>{colorListItems}</ul>
+      <ul>
+        {colors.map(color => (
+          <li key={color.id}>
+            {color.name} {color.hexcode}
+          </li>
+        ))}
+      </ul>
       <form>
         <div>
           <label htmlFor="name-input">Name</label>
@@ -55,6 +59,9 @@ export function ColorTool(props) {
             onChange={change}
           />
         </div>
+        <button type="button" onClick={addColor}>
+          Add Color
+        </button>
       </form>
     </>
   );
