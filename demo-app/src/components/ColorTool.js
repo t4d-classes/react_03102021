@@ -18,9 +18,9 @@ export function ColorTool(props) {
 
   // are similar to the methods on the class
   const change = (e) => {
+    // updates color form, and triggers the re-render
     setColorForm({
       ...colorForm, // copy the properties from the original object
-
       // updates the property of the field I am typing into
       [e.target.name]: e.target.value,
     });
