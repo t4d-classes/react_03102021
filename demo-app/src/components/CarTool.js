@@ -16,10 +16,14 @@ export function CarTool(props) {
     setCars([...cars, { id: Math.max(...cars.map(c => c.id), 0) + 1, ...car }]);
   };
 
+  const deleteCar = carId => {
+    setCars(cars.filter(c => c.id !== carId));
+  };
+
   return (
     <>
       <ToolHeader headerText="Car Tool" />
-      <CarTable cars={cars} onSortCol={sortCol} sortColName={sortColName} />
+      <CarTable cars={cars} onSortCol={sortCol} sortColName={sortColName} onDeleteCar={deleteCar} />
       <CarForm buttonText="Add Car" onSubmitCar={addCar} />
     </>
   );

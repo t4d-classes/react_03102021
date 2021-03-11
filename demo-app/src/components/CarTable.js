@@ -23,11 +23,12 @@ export function CarTable(props) {
           <th onClick={() => props.onSortCol('year')}>Year</th>
           <th onClick={() => props.onSortCol('color')}>Color</th>
           <th onClick={() => props.onSortCol('price')}>Price</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         {[...props.cars].sort(sortAsc(props.sortColName)).map(car => (
-          <CarViewRow car={car} key={car.id} />
+          <CarViewRow car={car} key={car.id} onDeleteCar={props.onDeleteCar} />
         ))}
       </tbody>
     </table>
