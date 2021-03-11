@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { ColorForm } from './ColorForm';
 
 import { ToolHeader } from './ToolHeader';
+import { ColorList } from './ColorList';
+import { ColorForm } from './ColorForm';
 
 export function ColorTool(props) {
   const [colors, setColors] = useState(props.colors.concat());
-
-
 
   const addColor = color => {
     setColors([
@@ -18,13 +17,7 @@ export function ColorTool(props) {
   return (
     <>
       <ToolHeader headerText="Color Tool" />
-      <ul>
-        {colors.map(color => (
-          <li key={color.id}>
-            {color.name} {color.hexcode}
-          </li>
-        ))}
-      </ul> 
+      <ColorList colors={colors} />
       <ColorForm buttonText="Add Color" onSubmitColor={addColor} />
     </>
   );
