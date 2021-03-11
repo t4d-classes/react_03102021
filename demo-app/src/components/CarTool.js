@@ -1,6 +1,19 @@
 import { useState } from 'react';
 
+const sortAsc = (colName = 'id') => {
+  return (a, b) => {
+    if (a[colName] > b[colName]) {
+      return 1;
+    } else if (a[colName] < b[colName]) {
+      return -1;
+    } else {
+      return 0;
+    }
+  };
+};
+
 export function CarTool(props) {
+  const [sortColName, setSortColName] = useState('id');
   const [cars, setCars] = useState([...props.cars]);
 
   const [carForm, setCarForm] = useState({
@@ -16,9 +29,13 @@ export function CarTool(props) {
       ...carForm,
       [e.target.name]:
         e.target.type === 'number'
-          ? parseInt(e.target.value, 10)
+          ? parseFloat(e.target.value)
           : e.target.value,
     });
+  };
+
+  const sortCol = colName => {
+    setSortColName(colName);
   };
 
   const addCar = () => {
@@ -46,16 +63,16 @@ export function CarTool(props) {
       <table>
         <thead>
           <tr>
-            <th>Id</th>
-            <th>Make</th>
-            <th>Model</th>
-            <th>Year</th>
-            <th>Color</th>
-            <th>Price</th>
+            <th onClick={() => sortCol('id')}>Id</th>
+            <th onClick={() => sortCol('make')}>Make</th>
+            <th onClick={() => sortCol('model')}>Model</th>
+            <th onClick={() => sortCol('year')}>Year</th>
+            <th onClick={() => sortCol('color')}>Color</th>
+            <th onClick={() => sortCol('price')}>Price</th>
           </tr>
         </thead>
         <tbody>
-          {cars.map(car => (
+          {[...cars].sort(sortAsc(sortColName)).map(car => (
             <tr key={car.id}>
               <td>{car.id}</td>
               <td>{car.make}</td>
