@@ -1,18 +1,6 @@
 import { CarEditRow } from './CarEditRow';
 import { CarViewRow } from './CarViewRow';
 
-const sortAsc = (colName = 'id') => {
-  return (a, b) => {
-    if (a[colName] > b[colName]) {
-      return 1;
-    } else if (a[colName] < b[colName]) {
-      return -1;
-    } else {
-      return 0;
-    }
-  };
-};
-
 export function CarTable(props) {
   return (
     <table>
@@ -28,25 +16,23 @@ export function CarTable(props) {
         </tr>
       </thead>
       <tbody>
-        {[...props.cars]
-          .sort(sortAsc(props.sortColName))
-          .map(car =>
-            props.editCarId === car.id ? (
-              <CarEditRow
-                car={car}
-                key={car.id}
-                onSaveCar={props.onSaveCar}
-                onCancelCar={props.onCancelCar}
-              />
-            ) : (
-              <CarViewRow
-                car={car}
-                key={car.id}
-                onEditCar={props.onEditCar}
-                onDeleteCar={props.onDeleteCar}
-              />
-            ),
-          )}
+        {props.cars.map(car =>
+          props.editCarId === car.id ? (
+            <CarEditRow
+              car={car}
+              key={car.id}
+              onSaveCar={props.onSaveCar}
+              onCancelCar={props.onCancelCar}
+            />
+          ) : (
+            <CarViewRow
+              car={car}
+              key={car.id}
+              onEditCar={props.onEditCar}
+              onDeleteCar={props.onDeleteCar}
+            />
+          ),
+        )}
       </tbody>
     </table>
   );
