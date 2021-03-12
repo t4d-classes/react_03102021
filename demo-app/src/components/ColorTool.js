@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { ToolHeader } from './ToolHeader';
 import { ColorList } from './ColorList';
 import { ColorForm } from './ColorForm';
@@ -7,7 +5,7 @@ import { ColorForm } from './ColorForm';
 import { useColorToolStore } from '../hooks/useColorToolStore';
 
 export function ColorTool(props) {
-  const [colors, addColor] = useColorToolStore([...props.colors]);
+  const { colors, addColor } = useColorToolStore([...props.colors]);
 
   return (
     <>
