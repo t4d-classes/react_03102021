@@ -2,6 +2,7 @@ import { render } from 'react-dom';
 
 import { ColorTool } from './components/ColorTool';
 import { CarTool } from './components/CarTool';
+import { CarToolStoreProvider } from './contexts/carToolStoreContext';
 
 const colorList = [
   { id: 1, name: 'red', hexcode: 'ff0000' },
@@ -33,7 +34,9 @@ const carList = [
 render(
   <>
     <ColorTool colors={colorList} />
-    <CarTool cars={carList} />
+    <CarToolStoreProvider cars={carList}>
+      <CarTool />
+    </CarToolStoreProvider>
   </>,
   document.querySelector('#root'),
 );

@@ -1,10 +1,8 @@
-import { useState } from 'react';
-
 import { ToolHeader } from './ToolHeader';
 import { CarTable } from './CarTable';
 import { CarForm } from './CarForm';
 
-import { useCarToolStore } from '../hooks/useCarToolStore';
+import { useCarToolStoreContext } from '../contexts/carToolStoreContext';
 
 export function CarTool(props) {
   const {
@@ -17,7 +15,7 @@ export function CarTool(props) {
     addCar,
     saveCar,
     deleteCar,
-  } = useCarToolStore([props.cars]);
+  } = useCarToolStoreContext();
 
   return (
     <>

@@ -1,10 +1,12 @@
 import { useState } from 'react';
 
-import { useList } from './useList';
+import { useList } from './useListAsync';
 
-export function useCarToolStore(initialCars) {
+export function useCarToolStore() {
   const [sortColName, setSortColName] = useState('id');
-  const [cars, appendCar, replaceCar, removeCar] = useList([...props.cars]);
+  const [cars, appendCar, replaceCar, removeCar] = useList(
+    'http://localhost:3050/cars',
+  );
   const [editCarId, setEditCarId] = useState(-1);
 
   const sortCol = colName => {
