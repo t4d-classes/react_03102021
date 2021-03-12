@@ -8,6 +8,9 @@ export function CarViewRow(props) {
       <td>{props.car.color}</td>
       <td>{props.car.price}</td>
       <td>
+        <button type="button" onClick={() => props.onEditCar(props.car.id)}>
+          Edit
+        </button>
         <button type="button" onClick={() => props.onDeleteCar(props.car.id)}>
           Delete
         </button>
