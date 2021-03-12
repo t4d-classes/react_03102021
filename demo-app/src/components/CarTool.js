@@ -4,9 +4,11 @@ import { ToolHeader } from './ToolHeader';
 import { CarTable } from './CarTable';
 import { CarForm } from './CarForm';
 
+import { useList } from '../hooks/useList';
+
 export function CarTool(props) {
   const [sortColName, setSortColName] = useState('id');
-  const [cars, setCars] = useState([...props.cars]);
+  const [cars, appendCar, replaceCar, removeCar] = useList([...props.cars]);
   const [editCarId, setEditCarId] = useState(-1);
 
   const sortCol = colName => {
@@ -14,20 +16,17 @@ export function CarTool(props) {
   };
 
   const addCar = car => {
-    setCars([...cars, { id: Math.max(...cars.map(c => c.id), 0) + 1, ...car }]);
+    appendCar(car);
     setEditCarId(-1);
   };
 
   const saveCar = car => {
-    const carIndex = cars.findIndex(c => c.id === car.id);
-    const newCars = [...cars];
-    newCars[carIndex] = car;
-    setCars(newCars);
+    replaceCar(car);
     setEditCarId(-1);
   };
 
   const deleteCar = carId => {
-    setCars(cars.filter(c => c.id !== carId));
+    removeCar(carId);
     setEditCarId(-1);
   };
 
