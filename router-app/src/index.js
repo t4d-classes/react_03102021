@@ -1,19 +1,37 @@
 import {
   BrowserRouter as Router,
   NavLink,
+  Link,
   Route,
   Switch,
+  useParams,
+  useHistory,
 } from "react-router-dom";
 import { render } from "react-dom";
 
 import "./index.css";
 
 function Home() {
-  return <h2>Home</h2>;
+  return (
+    <>
+      <h2>Home</h2>
+      <Link to="/about/2">About 2</Link>
+    </>
+  );
 }
 
 function About() {
-  return <h2>About</h2>;
+  const params = useParams();
+  const history = useHistory();
+
+  return (
+    <>
+      <h2>About {params.id}</h2>
+      <button type="button" onClick={() => history.push("/")}>
+        Home
+      </button>
+    </>
+  );
 }
 
 function App() {
@@ -25,10 +43,14 @@ function App() {
       <nav id="main-menu">
         <ul>
           <li>
-            <NavLink to="/" exact activeClassName="active">Home</NavLink>
+            <NavLink to="/" exact activeClassName="active">
+              Home
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/about" activeClassName="active">About</NavLink>
+            <NavLink to="/about/3" activeClassName="active">
+              About
+            </NavLink>
           </li>
         </ul>
       </nav>
@@ -37,7 +59,7 @@ function App() {
           <Route path="/" exact>
             <Home />
           </Route>
-          <Route path="/about">
+          <Route path="/about/:id">
             <About />
           </Route>
         </Switch>
