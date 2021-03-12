@@ -4,15 +4,10 @@ import { ToolHeader } from './ToolHeader';
 import { ColorList } from './ColorList';
 import { ColorForm } from './ColorForm';
 
-export function ColorTool(props) {
-  const [colors, setColors] = useState(props.colors.concat());
+import { useColorToolStore } from '../hooks/useColorToolStore';
 
-  const addColor = color => {
-    setColors([
-      ...colors,
-      { ...color, id: Math.max(...colors.map(c => c.id), 0) + 1 },
-    ]);
-  };
+export function ColorTool(props) {
+  const [colors, addColor] = useColorToolStore([...props.colors]);
 
   return (
     <>
