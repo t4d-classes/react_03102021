@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
 export function ColorForm(props) {
+
+  // data model / stateful logic
+
   const [colorForm, setColorForm] = useState({
     name: '',
     hexcode: '',
@@ -21,6 +24,8 @@ export function ColorForm(props) {
       hexcode: '',
     });
   };
+
+  // render logic
 
   return (
     <form>
