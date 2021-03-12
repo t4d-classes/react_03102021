@@ -1,36 +1,53 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export function useList(url) {
   const [items, setItems] = useState([]);
 
-  useEffect(
-    () => {
-      fetch(url)
-        .then(res => res.json())
-        .then(items => {
-          setItems(items);
-        });
+  const refreshItems = useCallback(() => {
+    fetch(url)
+      .then(res => res.json())
+      .then(items => {
+        setItems(items);
+      });
+  }, [url]);
+
+  const appendItem = useCallback(
+    item => {
+      return fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(item),
+      }).then(() => refreshItems());
     },
-    [url] /* only run on the initial load */,
+    [url, refreshItems],
   );
 
-  const appendItem = item => {
-    setItems([
-      ...items,
-      { id: Math.max(...items.map(c => c.id), 0) + 1, ...item },
-    ]);
-  };
+  const replaceItem = useCallback(
+    item => {
+      return fetch(`${url}/${encodeURIComponent(item.id)}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(item),
+      }).then(() => refreshItems());
+    },
+    [url, refreshItems],
+  );
 
-  const replaceItem = item => {
-    const itemIndex = items.findIndex(c => c.id === item.id);
-    const newCars = [...items];
-    newCars[itemIndex] = item;
-    setItems(newCars);
-  };
+  const removeItem = useCallback(
+    itemId => {
+      return fetch(`${url}/${encodeURIComponent(itemId)}`, {
+        method: 'DELETE',
+      }).then(() => refreshItems());
+    },
+    [url, refreshItems],
+  );
 
-  const removeItem = itemId => {
-    setItems(items.filter(c => c.id !== itemId));
-  };
+  useEffect(
+    () => {
+      refreshItems();
+    },
+    [refreshItems] /* only run on the initial load */,
+  );
 
-  return [items, appendItem, replaceItem, removeItem];
+  return [items, appendItem, replaceItem, removeItem, refreshItems];
 }

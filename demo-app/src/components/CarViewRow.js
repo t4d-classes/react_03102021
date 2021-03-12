@@ -1,4 +1,8 @@
-export function CarViewRow(props) {
+import { memo } from 'react';
+
+export const CarViewRow = memo(function CarViewRow(props) {
+  console.log('rendered car view row');
+
   return (
     <tr>
       <td>{props.car.id}</td>
@@ -17,4 +21,4 @@ export function CarViewRow(props) {
       </td>
     </tr>
   );
-}
+});
