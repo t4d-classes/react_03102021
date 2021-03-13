@@ -39,6 +39,7 @@ describe('CarTable render', () => {
         onDeleteCar={() => null}
         onSaveCar={() => null}
         onCancelCar={() => null}
+        onSortCol={() => null}
       />,
     );
 

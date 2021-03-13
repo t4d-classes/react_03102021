@@ -59,6 +59,6 @@ CarTable.propTypes = {
   onEditCar: PropTypes.func.isRequired,
   onDeleteCar: PropTypes.func.isRequired,
   onSaveCar: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
+  onCancelCar: PropTypes.func.isRequired,
   onSortCol: PropTypes.func.isRequired,
 };
